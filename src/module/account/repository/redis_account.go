@@ -7,9 +7,9 @@ import (
 
 	redigo "github.com/gomodule/redigo/redis"
 	cache "github.com/patrickmn/go-cache"
-	"github.com/sportivaid/go-template/src/account"
 	"github.com/sportivaid/go-template/src/common/apperror"
 	"github.com/sportivaid/go-template/src/model"
+	"github.com/sportivaid/go-template/src/module/account"
 )
 
 const (

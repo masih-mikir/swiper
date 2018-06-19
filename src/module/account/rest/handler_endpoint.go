@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sportivaid/go-template/src/account"
 	"github.com/sportivaid/go-template/src/model"
+	"github.com/sportivaid/go-template/src/module/account"
 	"github.com/sportivaid/go-template/util/httputil"
 )
 

@@ -8,9 +8,9 @@ import (
 
 	_ "github.com/lib/pq"
 	"github.com/sportivaid/go-template/config"
-	"github.com/sportivaid/go-template/src/account"
-	"github.com/sportivaid/go-template/src/account/repository"
-	"github.com/sportivaid/go-template/src/account/rest"
+	"github.com/sportivaid/go-template/src/module/account"
+	"github.com/sportivaid/go-template/src/module/account/repository"
+	"github.com/sportivaid/go-template/src/module/account/rest"
 	"github.com/tokopedia/sqlt"
 )
 
