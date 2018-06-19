@@ -1,4 +1,4 @@
-package rest
+package delivery
 
 import (
 	"log"

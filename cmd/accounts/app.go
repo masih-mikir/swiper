@@ -9,8 +9,8 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/sportivaid/go-template/config"
 	"github.com/sportivaid/go-template/src/module/account"
+	"github.com/sportivaid/go-template/src/module/account/delivery"
 	"github.com/sportivaid/go-template/src/module/account/repository"
-	"github.com/sportivaid/go-template/src/module/account/rest"
 	"github.com/tokopedia/sqlt"
 )
 
@@ -44,6 +44,6 @@ func main() {
 	accountRepo := repository.NewAccountRepository(dbMaster, dbMaster, cfg.Server.DBTimeout*time.Second)
 	accountRepo = repository.NewMiddlewareAccountRepository(accountCache, redisPool, accountRepo)
 	accountUsecase := account.NewAccountUsecase(accountRepo)
-	router := rest.NewAccountHandler(accountUsecase)
+	router := delivery.NewAccountHandler(accountUsecase)
 	router.Run(cfg.Account.Port)
 }
