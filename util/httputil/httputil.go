@@ -31,6 +31,7 @@ func WriteResponse(c *gin.Context, messages []string, processTime float64, data 
 
 func WriteErrorResponse(c *gin.Context, processTime float64, err error) {
 	errCode := apperror.GetErrorCodes(err)
+	c.Abort()
 	c.JSON(
 		errCode.HTTPcode,
 		response{
@@ -45,6 +46,7 @@ func WriteErrorResponse(c *gin.Context, processTime float64, err error) {
 func WriteDecodeErrorResponse(c *gin.Context, processTime float64, data interface{}) {
 	err := apperror.DecodeError
 	errCode := apperror.GetErrorCodes(err)
+	c.Abort()
 	c.JSON(
 		errCode.HTTPcode,
 		response{
