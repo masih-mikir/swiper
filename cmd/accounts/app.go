@@ -6,8 +6,10 @@ import (
 	"log"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"github.com/sportivaid/go-template/config"
+	"github.com/sportivaid/go-template/src/common/auth"
 	"github.com/sportivaid/go-template/src/module/account"
 	"github.com/sportivaid/go-template/src/module/account/delivery"
 	"github.com/sportivaid/go-template/src/module/account/repository"
@@ -41,9 +43,19 @@ func main() {
 		return
 	}
 
+	authMiddleware := auth.NewMiddleware()
+
 	accountRepo := repository.NewAccountRepository(dbMaster, dbMaster, cfg.Server.DBTimeout*time.Second)
 	accountRepo = repository.NewMiddlewareAccountRepository(accountCache, redisPool, accountRepo)
 	accountUsecase := account.NewAccountUsecase(accountRepo)
-	router := delivery.NewAccountHandler(accountUsecase)
+
+	var ginRouter *gin.Engine
+	if cfg.Server.Enviroment == "development" {
+		ginRouter = gin.Default()
+	} else {
+		ginRouter = gin.New()
+	}
+
+	router := delivery.NewAccountHandler(ginRouter, authMiddleware, accountUsecase)
 	router.Run(cfg.Account.Port)
 }

@@ -6,20 +6,27 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sportivaid/go-template/src/common/auth"
 	"github.com/sportivaid/go-template/src/model"
 	"github.com/sportivaid/go-template/src/module/account"
 	"github.com/sportivaid/go-template/util/httputil"
 )
 
-func NewAccountHandler(au account.Usecase) *gin.Engine {
-	router := gin.Default()
+type AccountHandler struct {
+	au account.Usecase
+}
+
+func NewAccountHandler(router *gin.Engine, m *auth.Middleware, au account.Usecase) *gin.Engine {
+	handler := &AccountHandler{au}
 
 	v1 := router.Group("/api/v1")
+	v1.POST("/account", handler.CreateAccountEndpoint())
+	v1.GET("/account/:account_id", handler.GetAccountEndpoint())
+
+	v1.Use(m.AuthUserToken())
 	{
-		v1.POST("/account", CreateAccountEndpoint(au))
-		v1.GET("/account/:account_id", GetAccountEndpoint(au))
-		v1.GET("/accounts", GetAccountsEndpoint(au))
-		v1.PUT("/account/:account_id", UpdateAccountEndpoint(au))
+		v1.GET("/accounts", handler.GetAccountsEndpoint())
+		v1.PUT("/account/:account_id", handler.UpdateAccountEndpoint())
 	}
 
 	return router
@@ -34,7 +41,7 @@ type createAccountResponse struct {
 	AccountID int64 `json:"account_id"`
 }
 
-func CreateAccountEndpoint(au account.Usecase) gin.HandlerFunc {
+func (h *AccountHandler) CreateAccountEndpoint() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		startTime := time.Now()
 
@@ -46,7 +53,7 @@ func CreateAccountEndpoint(au account.Usecase) gin.HandlerFunc {
 			return
 		}
 
-		accountID, err := au.CreateAccount(req.Email, req.Fullname)
+		accountID, err := h.au.CreateAccount(req.Email, req.Fullname)
 		if err != nil {
 			log.Println(err)
 			processTime := time.Now().Sub(startTime).Seconds()
@@ -67,7 +74,7 @@ type dataAccountResponse struct {
 	Account *model.Account `json:"account"`
 }
 
-func GetAccountEndpoint(au account.Usecase) gin.HandlerFunc {
+func (h *AccountHandler) GetAccountEndpoint() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		startTime := time.Now()
 
@@ -79,7 +86,7 @@ func GetAccountEndpoint(au account.Usecase) gin.HandlerFunc {
 			return
 		}
 
-		account, err := au.GetAccount(accountID)
+		account, err := h.au.GetAccount(accountID)
 		if err != nil {
 			log.Println(err)
 			processTime := time.Now().Sub(startTime).Seconds()
@@ -100,11 +107,11 @@ type dataAccountsResponse struct {
 	Accounts model.Accounts `json:"accounts"`
 }
 
-func GetAccountsEndpoint(au account.Usecase) gin.HandlerFunc {
+func (h *AccountHandler) GetAccountsEndpoint() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		startTime := time.Now()
 
-		accounts, err := au.GetAccounts()
+		accounts, err := h.au.GetAccounts()
 		if err != nil {
 			log.Println(err)
 			processTime := time.Now().Sub(startTime).Seconds()
@@ -126,7 +133,7 @@ type updateAccountRequest struct {
 	Fullname string `json:"user_fullname" form:"user_fullname"`
 }
 
-func UpdateAccountEndpoint(au account.Usecase) gin.HandlerFunc {
+func (h *AccountHandler) UpdateAccountEndpoint() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		startTime := time.Now()
 
@@ -146,7 +153,7 @@ func UpdateAccountEndpoint(au account.Usecase) gin.HandlerFunc {
 			return
 		}
 
-		err = au.UpdateAccount(accountID, req.Email, req.Fullname)
+		err = h.au.UpdateAccount(accountID, req.Email, req.Fullname)
 		if err != nil {
 			log.Println(err)
 			processTime := time.Now().Sub(startTime).Seconds()
