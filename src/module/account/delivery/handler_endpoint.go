@@ -6,10 +6,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sportivaid/go-template/src/common/auth"
-	"github.com/sportivaid/go-template/src/model"
-	"github.com/sportivaid/go-template/src/module/account"
-	"github.com/sportivaid/go-template/util/httputil"
+	"github.com/atletaid/go-template/src/common/auth"
+	"github.com/atletaid/go-template/src/model"
+	"github.com/atletaid/go-template/src/module/account"
+	"github.com/atletaid/go-template/util/httputil"
 )
 
 type AccountHandler struct {

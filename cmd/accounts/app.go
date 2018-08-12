@@ -8,11 +8,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
-	"github.com/sportivaid/go-template/config"
-	"github.com/sportivaid/go-template/src/common/auth"
-	"github.com/sportivaid/go-template/src/module/account"
-	"github.com/sportivaid/go-template/src/module/account/delivery"
-	"github.com/sportivaid/go-template/src/module/account/repository"
+	"github.com/atletaid/go-template/config"
+	"github.com/atletaid/go-template/src/common/auth"
+	"github.com/atletaid/go-template/src/module/account"
+	"github.com/atletaid/go-template/src/module/account/delivery"
+	"github.com/atletaid/go-template/src/module/account/repository"
 	"github.com/tokopedia/sqlt"
 )
 

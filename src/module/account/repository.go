@@ -1,7 +1,7 @@
 package account
 
 import (
-	"github.com/sportivaid/go-template/src/model"
+	"github.com/atletaid/go-template/src/model"
 )
 
 type AccountRepository interface {

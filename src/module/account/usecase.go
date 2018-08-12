@@ -3,7 +3,7 @@ package account
 import (
 	"log"
 
-	"github.com/sportivaid/go-template/src/model"
+	"github.com/atletaid/go-template/src/model"
 )
 
 type Usecase interface {

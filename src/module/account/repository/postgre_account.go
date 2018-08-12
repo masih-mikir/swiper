@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/lib/pq"
-	"github.com/sportivaid/go-template/src/common/apperror"
-	"github.com/sportivaid/go-template/src/model"
-	"github.com/sportivaid/go-template/src/module/account"
+	"github.com/atletaid/go-template/src/common/apperror"
+	"github.com/atletaid/go-template/src/model"
+	"github.com/atletaid/go-template/src/module/account"
 	"github.com/tokopedia/sqlt"
 )
 

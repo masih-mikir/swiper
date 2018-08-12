@@ -34,7 +34,7 @@ func NewPool(host string, dialTimeout time.Duration, idleTimeout time.Duration, 
 
 func NewAccountCache(cExpiration time.Duration, cIntervalPurges time.Duration) map[string]*cache.Cache {
 	return map[string]*cache.Cache{
-		KeyAccountsFindAll: cache.New(cExpiration*time.Minute, cIntervalPurges*time.Minute),
 		KeyAccountsFind:    cache.New(cExpiration*time.Minute, cIntervalPurges*time.Minute),
+		KeyAccountsFindAll: cache.New(cExpiration*time.Minute, cIntervalPurges*time.Minute),
 	}
 }

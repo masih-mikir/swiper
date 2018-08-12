@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/atletaid/go-template/src/common/apperror"
+	"github.com/atletaid/go-template/src/model"
+	"github.com/atletaid/go-template/src/module/account"
 	redigo "github.com/gomodule/redigo/redis"
 	cache "github.com/patrickmn/go-cache"
-	"github.com/sportivaid/go-template/src/common/apperror"
-	"github.com/sportivaid/go-template/src/model"
-	"github.com/sportivaid/go-template/src/module/account"
 )
 
 const (
-	KeyAccountsFindAll = "accounts:find_all"
 	KeyAccountsFind    = "accounts:find"
+	KeyAccountsFindAll = "accounts:find_all"
 )
 
 type redisAccountRepo struct {
@@ -147,7 +147,7 @@ func (repo *redisAccountRepo) FindAll() (model.Accounts, error) {
 		return accounts, nil
 	}
 
-	accounts := make(model.Accounts, 0)
+	var accounts model.Accounts
 	if err := json.Unmarshal(accountsJSON, &accounts); err != nil {
 		log.Println(err)
 		return nil, apperror.InternalServerError

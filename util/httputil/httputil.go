@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/form"
-	"github.com/sportivaid/go-template/src/common/apperror"
+	"github.com/atletaid/go-template/src/common/apperror"
 )
 
 type response struct {

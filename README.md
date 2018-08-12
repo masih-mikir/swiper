@@ -4,10 +4,10 @@
 
 ```
 #move to directory
-cd $GOPATH/src/github.com/sportivaid/
+cd $GOPATH/src/github.com/atletaid/
 
 # Clone into YOUR $GOPATH/src
-git clone https://github.com/sportivaid/go-template.git
+git clone https://github.com/atletaid/go-template.git
 
 #move to project
 cd go-template
