@@ -148,6 +148,7 @@ func (repo *postgreRecreationRepo) FindRecreationByID(recreationID int64) (*mode
 		RecreationPrice:       int(rRecreationPrice.Int64),
 		PositionLat:           rPositionLat.Float64,
 		PositionLong:          rPositionLong.Float64,
+		RecreationImage:       rRecreationImage.String,
 		RecreationCity:        rRecreationCity.String,
 		RecreationDescription: rRecreationDescription.String,
 		CreatedAt:             rCreatedAt.Time,
@@ -221,6 +222,7 @@ func (repo *postgreRecreationRepo) FindAllRecreations() (model.Recreations, erro
 			PositionLat:           rPositionLat.Float64,
 			PositionLong:          rPositionLong.Float64,
 			RecreationCity:        rRecreationCity.String,
+			RecreationImage:       rRecreationImage.String,
 			RecreationDescription: rRecreationDescription.String,
 			CreatedAt:             rCreatedAt.Time,
 		}
@@ -318,6 +320,7 @@ func (repo *postgreRecreationRepo) FindByLocation(cityName string) (model.Recrea
 			PositionLat:           rPositionLat.Float64,
 			PositionLong:          rPositionLong.Float64,
 			RecreationCity:        rRecreationCity.String,
+			RecreationImage:       rRecreationImage.String,
 			RecreationDescription: rRecreationDescription.String,
 			CreatedAt:             rCreatedAt.Time,
 		}

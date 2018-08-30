@@ -145,7 +145,7 @@ func (h *RecreationHandler) GetRecreationsByCityEndpoint() gin.HandlerFunc {
 			httputil.WriteDecodeErrorResponse(c, processTime, &req)
 			return
 		}
-		
+
 		recreations, err := h.ru.GetRecreationsByCity(req.City)
 		if err != nil {
 			log.Println(err)

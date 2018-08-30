@@ -8,6 +8,7 @@ var (
 	DecodeError         = errors.New("Wrong request params format, see example in data")
 	AccountNotExists    = errors.New("Account not exists")
 	RecreationNotExists = errors.New("Recreation not exists")
+	RestaurantNotExists = errors.New("Restaurant not exists")
 )
 
 type ErrorCodes struct {
@@ -26,6 +27,7 @@ var errorCodes = map[error]ErrorCodes{
 	DecodeError:         ErrorCodes{400, 100201},
 	AccountNotExists:    ErrorCodes{400, 200010},
 	RecreationNotExists: ErrorCodes{400, 300010},
+	RestaurantNotExists: ErrorCodes{400, 400010},
 }
 
 func GetErrorCodes(err error) ErrorCodes {

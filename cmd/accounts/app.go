@@ -14,6 +14,9 @@ import (
 	"github.com/atletaid/go-template/src/module/recreation"
 	_recreation_rest "github.com/atletaid/go-template/src/module/recreation/delivery"
 	_recreation_repo "github.com/atletaid/go-template/src/module/recreation/repository"
+	"github.com/atletaid/go-template/src/module/restaurant"
+	_restaurant_rest "github.com/atletaid/go-template/src/module/restaurant/delivery"
+	_restaurant_repo "github.com/atletaid/go-template/src/module/restaurant/repository"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"github.com/tokopedia/sqlt"
@@ -41,6 +44,7 @@ func main() {
 	// Init Inmemory & Redis Cache
 	accountCache := repository.NewAccountCache(cfg.InMemory.DefaultExpiration, cfg.InMemory.IntervalPurges)
 	recreationCache := _recreation_repo.NewRecreationCache(cfg.InMemory.DefaultExpiration, cfg.InMemory.IntervalPurges)
+	restaurantCache := _restaurant_repo.NewRestaurantCache(cfg.InMemory.DefaultExpiration, cfg.InMemory.IntervalPurges)
 	redisPool, err := repository.NewPool(cfg.Redis.Host, cfg.Redis.DialTimeout*time.Second, cfg.Redis.IdleTimeout*time.Second, cfg.Redis.PoolSize)
 	if err != nil {
 		log.Println(err)
@@ -57,6 +61,10 @@ func main() {
 	recreationRepo = _recreation_repo.NewMiddlewareRecreationRepository(recreationCache, redisPool, recreationRepo)
 	recreationUsecase := recreation.NewRecreationUsecase(recreationRepo)
 
+	restaurantRepo := _restaurant_repo.NewRestaurantRepository(dbMaster, dbMaster, cfg.Server.DBTimeout*time.Second)
+	restaurantRepo = _restaurant_repo.NewMiddlewareRestaurantRepository(restaurantCache, redisPool, restaurantRepo)
+	restaurantUsecase := restaurant.NewRestaurantUsecase(restaurantRepo)
+
 	var ginRouter *gin.Engine
 	if cfg.Server.Enviroment == "development" {
 		ginRouter = gin.Default()
@@ -66,5 +74,6 @@ func main() {
 
 	router := delivery.NewAccountHandler(ginRouter, authMiddleware, accountUsecase)
 	router = _recreation_rest.NewRecreationHandler(router, recreationUsecase)
+	router = _restaurant_rest.NewRestaurantHandler(router, restaurantUsecase)
 	router.Run(cfg.Account.Port)
 }
