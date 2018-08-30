@@ -1,1 +1,1 @@
-web: swiper
+web: accounts
