@@ -58,5 +58,5 @@
   unused-packages = true
 
 [metadata.heroku]
-  root-package = "github.com/agasyan/toped-devcamp"
+  root-package = "github.com/atletaid/go-template"
   
